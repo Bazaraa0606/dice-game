@@ -38,26 +38,62 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         document.getElementById('current-' + activePlayer).textContent = roundScore;
     } else {
         // 1 буусан тул тоглогчийн ээлжийг энэ хэсэгт солиж өгнө.
-
         // энэ тоглогчийн ээлжиндээ цуглуулсан оноог 1 буувал 0 болгоно
-        roundScore=0
-        document.getElementById('current-' + activePlayer).textContent = 0 ;
-        //тоглогчийн ээлжийг нөгөө тоглогчруу шилжүүлнэ
-        // Хэрэв идэвхтэй тоглогч нь 0 байвал идэвхитэй тоглогчийг 1 болго
-        // үгүй бол  идэвхтэй тоглогчийг 0 болго
-        activePlayer === 0 ? (activePlayer =1) : (activePlayer=0);
-        
-        // Улаан цэгийг шилжүүлэх toggle ni baihgvi bol nemne hasna add+remove
-        document.querySelector('.player-0-panel').classList.toggle('active');
-        document.querySelector('.player-1-panel').classList.toggle('active');
-        //шоог түр алга болгоно 1 буувал
-        diceDom.style.display ='none';
-        // if(activePlayer ===0) {
-        //     activePlayer=1;
-        // } else {
-        //     activePlayer=0;
-        // }
+        switchToNextPlayer();
     }
 
 
 });
+// HOLD товчны эвент листенер
+document.querySelector('.btn-hold').addEventListener('click', function(){
+    //уг тоглогчийн цуглуулсан ээлжийн оноог глобаль оноон дээр нэмж өгнө. if(activePlayer===0) = scores[activePlayer]
+    // if(activePlayer===0){
+    //     scores[0] = scores [0] + roundScore;
+    // } else {
+    //     scores[1] = scores [1] + roundScore;
+    // }
+    scores[activePlayer]=scores[activePlayer]+roundScore
+
+    //Дэлгэц дээрх оноог нь өөрчилнө
+    document.getElementById('score-'+activePlayer).textContent =scores[activePlayer];
+
+    // Уг тоглогч хожсон эсэхийг шалгах
+    if(scores[activePlayer] >= 10) {
+        //Та хожлоо. БАЯР ХҮРГЭЕ. Алив ахдаа дансаа. г нэрний оронд гаргана
+        document.getElementById('name-' + activePlayer).textContent='Алив ахдаа дансаа.';
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+    } else{
+        switchToNextPlayer();
+    }
+})
+
+function switchToNextPlayer(){
+   // энэ тоглогчийн ээлжиндээ цуглуулсан оноог 1 буувал 0 болгоно
+   roundScore=0
+   document.getElementById('current-' + activePlayer).textContent = 0 ;
+   //тоглогчийн ээлжийг нөгөө тоглогчруу шилжүүлнэ
+   // Хэрэв идэвхтэй тоглогч нь 0 байвал идэвхитэй тоглогчийг 1 болго
+   // үгүй бол  идэвхтэй тоглогчийг 0 болго
+   activePlayer === 0 ? (activePlayer =1) : (activePlayer=0);
+        
+   // Улаан цэгийг шилжүүлэх toggle ni baihgvi bol nemne hasna add+remove
+   document.querySelector('.player-0-panel').classList.toggle('active');
+   document.querySelector('.player-1-panel').classList.toggle('active');
+   //шоог түр алга болгоно 1 буувал
+   diceDom.style.display ='none';
+   // if(activePlayer ===0) {
+   //     activePlayer=1;
+   // } else {
+   //     activePlayer=0;
+   // }
+}
+// Шинэ тоглоом эхлүүлэх товчны эвент листенер
+document.querySelector('.byn-new').addEventListener('click', function(){
+    
+})
+
+
+
+
+// DRY dont repeat yourself dahin dahinbitgii yumiig dawtaj hiigeed bai!!!!!!
