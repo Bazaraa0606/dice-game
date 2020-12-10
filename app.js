@@ -1,4 +1,6 @@
 //тоглоомын бүх газарт ашиглагдах глобал хувьсагчдийг энд зарлана
+//Тоглоом дууссан эсэхийг хадгалах төлөвийн хувьсагч
+var isNewGame;
 //аль тоглогч шоо шидэхийг энд хадгална
 var activePlayer;
 //хоёр тоглогчийн цуглуулсан оноонууд
@@ -12,7 +14,9 @@ var diceDom =document.querySelector('.dice');
 initGame();
 
 //тоглоомыг шинээр эхлэхэд бэлтгэнэ.
-function initGame(){
+function initGame() {
+// тоглоом эхэллээ гэдэг төлөвт оруулна.
+isNewGame = true;
 // Тоглогчийн ээлжийг хадгалах хувьсагч, нэгдгээр тоглогчийг 0, хоёрдугаар тоглогчийг 1 гэж тэмдэглэлээ
 activePlayer = 0;
 // Тоглогчдийн цуглуулсан оноог цуглуулах хувьсагч 
@@ -45,7 +49,8 @@ diceDom.style.display ='none';
 }
 
 // Шоог шидэх эвент листенер
-document.querySelector('.btn-roll').addEventListener('click', function(){
+document.querySelector('.btn-roll').addEventListener('click', function(){ 
+    if(isNewGame) {
     // 1-6 доторх санамсаргүй нэг тоог гаргаж авна
     var diceNumber = Math.floor(Math.random()*6)+1;
     
@@ -65,11 +70,16 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         // энэ тоглогчийн ээлжиндээ цуглуулсан оноог 1 буувал 0 болгоно
         switchToNextPlayer();
     }
+  } else {
+      alert('Тоглоом дууссан байна. NEW GAME товчийг дарж шинээр эхлэнэ үү');
+  }
+    
 });
 
 // HOLD товчны эвент листенер
 document.querySelector('.btn-hold').addEventListener('click', function(){
-    //уг тоглогчийн цуглуулсан ээлжийн оноог глобаль оноон дээр нэмж өгнө. if(activePlayer===0) = scores[activePlayer]
+    if(isNewGame){
+        //уг тоглогчийн цуглуулсан ээлжийн оноог глобаль оноон дээр нэмж өгнө. if(activePlayer===0) = scores[activePlayer]
     // if(activePlayer===0){
     //     scores[0] = scores [0] + roundScore;
     // } else {
@@ -82,12 +92,17 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
 
     // Уг тоглогч хожсон эсэхийг шалгах
     if(scores[activePlayer] >= 10) {
+        // тоглоомыг дууссан төлөвт оруулна
+        isNewGame= false;
         //Та хожлоо. БАЯР ХҮРГЭЕ. Алив ахдаа дансаа. г нэрний оронд гаргана
         document.getElementById('name-' + activePlayer).textContent='Алив ахдаа дансаа.';
         document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
     } else{
         switchToNextPlayer();
+    }
+    } else{
+        alert('Тоглоом дууссан байна. NEW GAME товчийг дарж шинээр эхлэнэ үү');  
     }
 })
 
