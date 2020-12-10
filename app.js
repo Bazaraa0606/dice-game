@@ -95,7 +95,7 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
         // тоглоомыг дууссан төлөвт оруулна
         isNewGame= false;
         //Та хожлоо. БАЯР ХҮРГЭЕ. Алив ахдаа дансаа. г нэрний оронд гаргана
-        document.getElementById('name-' + activePlayer).textContent='Алив ахдаа дансаа.';
+        document.getElementById('name-' + activePlayer).textContent='Та хожлоо. БАЯР ХҮРГЭЕ. Алив ахдаа дансаа.';
         document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
     } else{
